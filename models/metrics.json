@@ -1,0 +1,32 @@
+{
+  "heart": {
+    "LinearRegression": {
+      "MAE": 4.2143,
+      "MSE": 27.7641,
+      "RMSE": 5.2692,
+      "R2": 0.8835
+    },
+    "DecisionTree": {
+      "MAE": 4.9431,
+      "MSE": 39.4934,
+      "RMSE": 6.2844,
+      "R2": 0.8344
+    },
+    "best_model": "LinearRegression"
+  },
+  "diabetes": {
+    "LinearRegression": {
+      "MAE": 1.9073,
+      "MSE": 5.8329,
+      "RMSE": 2.4151,
+      "R2": 0.9518
+    },
+    "DecisionTree": {
+      "MAE": 2.8347,
+      "MSE": 12.6971,
+      "RMSE": 3.5633,
+      "R2": 0.8951
+    },
+    "best_model": "LinearRegression"
+  }
+}
