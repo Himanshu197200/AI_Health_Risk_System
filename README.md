@@ -1,212 +1,167 @@
-# Intelligent Patient Risk Assessment System  
-**AI Health Risk System — End-to-End Healthcare Analytics Platform**
+# Intelligent Patient Risk Assessment And Agentic Health Support System
 
- **Live App:**  
-https://aihealthrisksystem5duvbgvx8pvz9xarixkmhgi.streamlit.app/
+An end-semester AI/ML project that combines five regression-based health risk models with an agentic report generator, interactive Streamlit dashboard, and export-ready outputs.
 
-**GitHub Repository:**  
-https://github.com/Himanshu197200/AI_Health_Risk_System
+## Live App
 
----
+[Streamlit Deployment](https://aihealthrisksystem5duvbgvx8pvz9xarixkmhgi.streamlit.app/)
 
-##  Overview
+## What The System Does
 
-The **Intelligent Patient Risk Assessment System** is a machine learning–based healthcare analytics platform designed to predict potential health risks using structured clinical and lifestyle data.
+- Predicts five health risk scores on a `0-100` scale:
+  - `diabetes_risk_score`
+  - `heart_disease_risk_score`
+  - `hypertension_risk_score`
+  - `obesity_risk_score`
+  - `cholesterol_risk_score`
+- Uses one shared dataset and one shared preprocessing pipeline for all five targets
+- Shows Plotly gauge charts, comparative dashboards, and feature-contribution views
+- Generates an AI health-support report using a free-tier LLM when configured
+- Falls back to a rule-based report when no API key is available
+- Exports results as PDF and JSON
 
-The system currently focuses on estimating risk scores for:
+## Architecture
 
--  Heart Disease  
--  Diabetes  
+```mermaid
+flowchart TD
+    A["data/raw_data.csv"] --> B["src/preprocess.py"]
+    B --> C["One-hot encoding + feature selection"]
+    C --> D["src/features.py<br/>StandardScaler + feature schema"]
+    D --> E["main.py training pipeline"]
+    E --> F["models/*.pkl + metrics.json"]
+    F --> G["src/predict.py"]
+    G --> H["src/models/* predictor wrappers"]
+    H --> I["app/streamlit_app.py"]
+    I --> J["Risk dashboard + exports"]
+    I --> K["src/agent/health_agent.py"]
+    K --> L["Free-tier LLM or rule-based report"]
+```
 
-By leveraging supervised learning techniques, the application processes patient health indicators and provides continuous risk score predictions to support early detection and preventive healthcare analysis.
+## Project Structure
 
-The project demonstrates a **production-ready ML workflow** including data preprocessing, advanced EDA, feature engineering, model training, evaluation, and Streamlit deployment.
-
----
-
-##  Objective
-
-The primary objectives of this project are to:
-
-- Design a robust data preprocessing pipeline  
-- Perform advanced exploratory data analysis  
-- Engineer meaningful predictive features  
-- Train and evaluate supervised machine learning models  
-- Compare multiple regression algorithms  
-- Provide interpretable risk score predictions  
-- Deploy an interactive web-based interface  
-- Maintain modular and scalable architecture  
-
-The system emphasizes **model interpretability, evaluation transparency, and clean software engineering practices**.
-
----
-
-#  Milestone 1 — ML-Based Risk Prediction (Completed)
-
-Milestone 1 focuses strictly on **traditional machine learning models (no GenAI)** to build a reliable healthcare risk prediction pipeline.
-
----
-
-##  Technology Stack
-
-- Python  
-- Scikit-learn  
-- Pandas  
-- NumPy  
-- Matplotlib  
-- Seaborn  
-- Streamlit  
-
----
-
-##  Dataset
-
-The dataset consists of large-scale structured patient health information including:
-
-- Demographic attributes (e.g., Age, Gender)  
-- Physiological indicators (e.g., Blood Pressure, BMI)  
-- Lifestyle factors (e.g., Smoking, Physical Activity)  
-- Clinical health indicators  
-- Risk score targets for supervised learning  
-
-The dataset is stored in the `data/` directory.
-
----
-
-#  Machine Learning Approach
-
-The problem is formulated primarily as a **regression task** to estimate continuous patient risk scores.
-
-###  Models Used
-
-- Linear Regression  
-- Decision Tree Regressor  
-
-Separate pipelines were developed for:
-
-- Heart Disease Risk  
-- Diabetes Risk  
-
----
-
-##  Evaluation Metrics
-
-Model performance is evaluated using regression metrics:
-
-- MAE (Mean Absolute Error)  
-- MSE (Mean Squared Error)  
-- RMSE (Root Mean Squared Error)  
-- R² Score  
-
-These metrics provide a comprehensive understanding of prediction error and model generalization.
-
----
-
-#  Model Performance (Test Set)
-
-##  Heart Disease Risk
-
-| Model | MAE | MSE | RMSE | R² |
-|------|-----|-----|------|-----|
-| Linear Regression | **4.21** | **27.76** | **5.27** | **0.8835** |
-| Decision Tree | 4.94 | 39.49 | 6.28 | 0.8344 |
-
- **Selected Model:** Linear Regression (better generalization)
-
----
-
-##  Diabetes Risk
-
-| Model | MAE | MSE | RMSE | R² |
-|------|-----|-----|------|-----|
-| Linear Regression | **1.91** | **5.83** | **2.42** | **0.9518** |
-| Decision Tree | 2.83 | 12.70 | 3.56 | 0.8951 |
-
- **Selected Model:** Linear Regression (lower prediction error)
-
----
-
-##  System Pipeline
-
-Raw Data  
-↓  
-Preprocessing (preprocess.py)  
-↓  
-Feature Engineering (features.py)  
-↓  
-Model Training (train.py)  
-↓  
-Evaluation (evaluate.py)  
-↓  
-Saved Models (models/)  
-↓  
-Prediction Pipeline (predict.py)  
-↓  
-Streamlit App (main.py)
-
----
-
-##  Project Structure
 ```text
-AI_Health_Risk_System/  
-│  
-├── app/                 # Streamlit UI components  
-
-├── data/                # Raw and processed datasets  
-
-├── models/              # Saved model artifacts (.pkl)  
-
-├── notebooks/           # EDA and experimentation  
-
-├── src/  
-│   ├── preprocess.py    # Data cleaning pipeline  
-
-│   ├── features.py      # Feature engineering logic  
-
-│   ├── train.py         # Model training  
-
-│   ├── evaluate.py      # Model evaluation  
-
-│   └── predict.py       # Inference pipeline  
-│  
-├── main.py              # Streamlit entry point  
-
+AI_Health_Risk_System/
+├── app/
+│   ├── __init__.py
+│   └── streamlit_app.py
+├── data/
+│   └── raw_data.csv
+├── models/
+│   ├── best_diabetes_model.pkl
+│   ├── best_heart_model.pkl
+│   ├── best_hypertension_model.pkl
+│   ├── best_obesity_model.pkl
+│   ├── best_cholesterol_model.pkl
+│   ├── scaler.pkl
+│   ├── feature_columns.pkl
+│   └── metrics.json
+├── notebooks/
+│   └── train_remaining_models.ipynb
+├── src/
+│   ├── agent/
+│   ├── models/
+│   ├── utils/
+│   ├── evaluate.py
+│   ├── features.py
+│   ├── predict.py
+│   ├── preprocess.py
+│   └── train.py
+├── tests/
+│   └── test_health_system.py
+├── app.py
+├── main.py
+├── .env.example
+├── COMMIT_PLAN.md
+├── PROJECT_WORKFLOW.md
 ├── requirements.txt
-
-├── README.md  
-
-└── PROJECT_WORKFLOW.md
+└── runtime.txt
 ```
-## Setup Instructions
-```text
-1. Clone the repository:
 
-   git clone <repository_url>
+## Dataset
 
-2. Navigate to the project directory:
+The dataset in `data/raw_data.csv` contains `97,297` records and `33` columns:
 
-   cd <project_directory>
+- `28` input features covering demographics, lifestyle, history, vitals, and lab markers
+- `5` target risk scores for supervised learning
 
-3. Install dependencies:
+The system uses all 28 input features for all five risk models to keep training and inference consistent.
 
-   pip install -r requirements.txt
+## Machine Learning Approach
 
-4. Run the application:
+- Problem type: multi-target healthcare risk regression
+- Candidate models per target:
+  - `LinearRegression`
+  - `DecisionTreeRegressor`
+- Selection rule:
+  - lower `RMSE` wins
+  - ties break on higher `R²`
+- Shared preprocessing:
+  - one-hot encoding for categorical features
+  - `StandardScaler` fit on training data only
+  - saved encoded feature schema for stable inference
 
-   streamlit run app.py
+## AI Report Layer
+
+The agentic support system can use:
+
+- `Groq` with `GROQ_API_KEY`
+- `Google Gemini` with `GOOGLE_API_KEY`
+
+If no API key is configured, the app still works and generates a structured rule-based report using the model outputs and built-in medical guidance snippets.
+
+## Setup
+
+```bash
+git clone https://github.com/Himanshu197200/AI_Health_Risk_System.git
+cd AI_Health_Risk_System
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
 ```
----
 
-## Design Principles
+## Train The Models
 
-- Modular code organization  
-- Clear separation between preprocessing and modeling  
-- Reproducible training workflow  
-- Interpretable healthcare predictions  
-- Scalable for future extensions  
+```bash
+python main.py
+```
 
----
+This creates or refreshes:
 
-## License
+- `models/best_diabetes_model.pkl`
+- `models/best_heart_model.pkl`
+- `models/best_hypertension_model.pkl`
+- `models/best_obesity_model.pkl`
+- `models/best_cholesterol_model.pkl`
+- `models/scaler.pkl`
+- `models/feature_columns.pkl`
+- `models/metrics.json`
 
-This project is developed for academic purposes.
+## Run The App
+
+```bash
+streamlit run app.py
+```
+
+## Run Tests
+
+```bash
+python -m unittest tests/test_health_system.py
+```
+
+## Environment Variables
+
+Copy `.env.example` to `.env` and set at least one provider if you want live LLM generation.
+
+```bash
+GROQ_API_KEY=your_groq_api_key_here
+# or
+GOOGLE_API_KEY=your_google_api_key_here
+```
+
+## Team Collaboration
+
+The repository includes [`COMMIT_PLAN.md`](/Users/gr.priyk/Documents/New project/AI_Health_Risk_System/COMMIT_PLAN.md:1) with an exact four-member distribution plan and per-member git commands.
+
+## Medical Disclaimer
+
+This project is for educational and academic demonstration purposes only. It does not diagnose disease, prescribe treatment, or replace qualified medical advice.
