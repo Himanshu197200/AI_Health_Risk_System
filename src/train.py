@@ -19,6 +19,13 @@ def train_decision_tree(X_train, y_train, random_state=42):
     return model
 
 
+def train_candidate_models(X_train, y_train, random_state=42):
+    return {
+        "LinearRegression": train_linear_regression(X_train, y_train),
+        "DecisionTree": train_decision_tree(X_train, y_train, random_state=random_state),
+    }
+
+
 def save_model(model, filename):
     os.makedirs(MODELS_DIR, exist_ok=True)
     path = os.path.join(MODELS_DIR, filename)
