@@ -1,31 +1,76 @@
 {
-  "heart": {
+  "diabetes": {
     "LinearRegression": {
-      "MAE": 4.2143,
-      "MSE": 27.7641,
-      "RMSE": 5.2692,
-      "R2": 0.8835
+      "MAE": 1.743,
+      "MSE": 4.9212,
+      "RMSE": 2.2184,
+      "R2": 0.9593
     },
     "DecisionTree": {
-      "MAE": 4.9431,
-      "MSE": 39.4934,
-      "RMSE": 6.2844,
-      "R2": 0.8344
+      "MAE": 2.8349,
+      "MSE": 12.8045,
+      "RMSE": 3.5783,
+      "R2": 0.8942
     },
     "best_model": "LinearRegression"
   },
-  "diabetes": {
+  "heart": {
     "LinearRegression": {
-      "MAE": 1.9073,
-      "MSE": 5.8329,
-      "RMSE": 2.4151,
-      "R2": 0.9518
+      "MAE": 4.1686,
+      "MSE": 27.1961,
+      "RMSE": 5.215,
+      "R2": 0.8859
     },
     "DecisionTree": {
-      "MAE": 2.8347,
-      "MSE": 12.6971,
-      "RMSE": 3.5633,
-      "R2": 0.8951
+      "MAE": 4.9513,
+      "MSE": 39.4076,
+      "RMSE": 6.2775,
+      "R2": 0.8347
+    },
+    "best_model": "LinearRegression"
+  },
+  "hypertension": {
+    "LinearRegression": {
+      "MAE": 2.0252,
+      "MSE": 6.4514,
+      "RMSE": 2.54,
+      "R2": 0.9602
+    },
+    "DecisionTree": {
+      "MAE": 3.4778,
+      "MSE": 19.3302,
+      "RMSE": 4.3966,
+      "R2": 0.8808
+    },
+    "best_model": "LinearRegression"
+  },
+  "obesity": {
+    "LinearRegression": {
+      "MAE": 1.5235,
+      "MSE": 3.9658,
+      "RMSE": 1.9914,
+      "R2": 0.9676
+    },
+    "DecisionTree": {
+      "MAE": 2.0641,
+      "MSE": 6.7198,
+      "RMSE": 2.5923,
+      "R2": 0.9451
+    },
+    "best_model": "LinearRegression"
+  },
+  "cholesterol": {
+    "LinearRegression": {
+      "MAE": 1.3603,
+      "MSE": 3.1395,
+      "RMSE": 1.7719,
+      "R2": 0.9817
+    },
+    "DecisionTree": {
+      "MAE": 1.4292,
+      "MSE": 3.3074,
+      "RMSE": 1.8186,
+      "R2": 0.9807
     },
     "best_model": "LinearRegression"
   }
