@@ -284,12 +284,22 @@ class HealthAgent:
                 )
             return "No specific follow-up question was provided, so the guidance focuses on maintaining low-risk habits."
 
-        lowered = user_query.lower()
+        inferred = self.knowledge_base._infer_diseases_from_query(user_query)
         matched_docs = []
         for item in knowledge:
-            haystack = " ".join([item["disease"], item["topic"], item["content"]]).lower()
-            if any(token in haystack for token in lowered.split()):
+            if item["disease"] in inferred:
                 matched_docs.append(item)
+                
+        if not matched_docs:
+            import re
+            tokens = re.findall(r"\b[a-z]{3,}\b", user_query.lower())
+            stopwords = {"how", "what", "where", "when", "why", "who", "can", "will", "would", "should", "the", "and", "for", "with", "about", "that", "this", "these", "those", "have", "has", "had", "are", "been", "was", "were", "you", "your", "does", "did", "doing"}
+            valid_tokens = [t for t in tokens if t not in stopwords]
+            
+            for item in knowledge:
+                haystack = " ".join([item["disease"], item["topic"], item["content"]]).lower()
+                if any(token in haystack for token in valid_tokens):
+                    matched_docs.append(item)
 
         if matched_docs:
             top = matched_docs[0]
