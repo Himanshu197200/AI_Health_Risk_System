@@ -405,20 +405,6 @@ def render_export_tab(predictions, patient_data):
         "agent_report": agent_report,
     }
 
-    st.markdown("""
-        <div style="background: linear-gradient(145deg, #FDFDF8, #F4F3EA); border: 1px solid #E8E5D5; border-top: 4px solid #C49A45; border-radius: 10px; padding: 24px; margin-top: 32px; margin-bottom: 20px; box-shadow: 0 8px 16px rgba(112, 128, 144, 0.08);">
-            <div style="display: flex; align-items: center; margin-bottom: 12px;">
-                <div style="background-color: rgba(196, 154, 69, 0.15); border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; margin-right: 12px;">
-                    <span style="color: #C49A45; font-size: 16px;">✦</span>
-                </div>
-                <h4 style="color: #4A5560; margin: 0; font-size: 1.2rem; font-weight: 600;">System Payload</h4>
-            </div>
-            <p style="color: #7A8694; margin: 0; font-size: 0.95rem; line-height: 1.5;">
-                Export the native, machine-readable JSON document. This comprehensive payload includes raw model analytics, serialized patient inputs, and programmatic AI inferences metadata.
-            </p>
-        </div>
-    """, unsafe_allow_html=True)
-    
     st.download_button(
         "Download JSON Payload",
         data=json.dumps(export_payload, indent=2),
